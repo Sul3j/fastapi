@@ -1,0 +1,14 @@
+from fastapi import FastAPI
+from . import schemas, models
+from .database import engine
+from sqlalchemy.orm import Session # type: ignore
+
+app = FastAPI()
+
+
+models.Base.metadata.create_all(engine)
+
+
+@app.post('/blog')
+def create(request: schemas.Blog, db : Session):
+    return db
